@@ -1,0 +1,122 @@
+/* Styles généraux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1f1f1f;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+}
+
+
+.navbar .nav-links li {
+    display: inline;
+    margin: 0 20px;
+    text-align: center;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.navbar .nav-links li a:hover {
+    text-decoration: underline;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.home-container {
+    text-align: center;
+}
+.home-container h2{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Code Arduino */
+
+.code-section{
+    margin-top: 30px;
+    text-align: left;
+    max-width: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 22%;
+}
+
+.code-section h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+textarea {
+    display: none; /* Masqué car remplacé par CodeMirror */
+    
+}
+
+
+/* CodeMirror Editor */
+.CodeMirror {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 400px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    font-size: 0.9rem;
+    color: #777;
+    text-align: center;
+}
+
+video{
+    max-width: 100%;
+    width: 75%;
+    border-radius: 20px;
+}
+
+.container h2{
+    margin-bottom: 20px;
+}

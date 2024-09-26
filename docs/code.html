@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Code Arduino - Projet Mini Parking</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Lien vers CodeMirror CSS (incluant un thème sombre) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>Projet Mini Parking - SIN STI2D</h1>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="video.html">Voir la vidéo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="code-section">
+        <h2>Code Arduino du projet Mini Parking</h2>
+
+        <!-- Premier éditeur de code -->
+         <h3>Programme principal :<br><br></h3>
+        <textarea id="code-editor-1">
+void setup() {
+  pinMode(BP_IN, INPUT);
+  pinMode(BP_OUT, INPUT);
+  pinMode(LED_IN, OUTPUT);
+  pinMode(LED_OUT, OUTPUT);
+  pinMode(CAR_IN, INPUT);
+  pinMode(CAR_OUT, INPUT);
+  Serial.begin(9600);
+          
+  barriereEntree.attach(2); 
+  barriereSortie.attach(3); 
+            
+  lcd.begin(16, 2);  
+  lcd.setRGB(colorR, colorG, colorB);  
+            
+  lcd.setCursor(0, 0);
+  lcd.print("Parking system");
+  lcd.setCursor(0, 1);
+  lcd.print("Initialisation...");
+  delay(2000);  
+          
+  fermerBarriereEntree();
+  fermerBarriereSortie();
+          
+  updatePlacesDisponibles();
+}
+          
+void loop() {
+  if (digitalRead(BP_IN) == 1 && placesDisponibles > 0) {
+          
+      digitalWrite(LED_IN, HIGH);
+      ouvrirBarriereEntree();
+                
+      delay(2000);
+          
+      while (digitalRead(CAR_IN) == 0) { 
+        delay(100);  
+      }
+          
+      fermerBarriereEntree();
+      updatePlacesDisponibles(); 
+      digitalWrite(LED_IN, LOW);
+          
+    }
+            
+          
+  if (digitalRead(BP_OUT) == 1) {
+    {
+      digitalWrite(LED_OUT, HIGH);
+      ouvrirBarriereSortie();
+      delay(2000);
+          
+      while (digitalRead(CAR_OUT) == 0) {
+        delay(100);  
+      }
+          
+      fermerBarriereSortie();
+      updatePlacesDisponibles(); 
+      digitalWrite(LED_OUT, LOW);
+          
+    }
+            
+  updatePlacesDisponibles();
+  delay(1000);  
+}
+}
+        </textarea>
+
+        <!-- Deuxième éditeur de code -->
+        <h3>UpdatePlacesDisponibles :<br><br></h3>
+        <textarea id="code-editor-2">
+
+void updatePlacesDisponibles() {
+    int place1 = digitalRead(PLACE_1);
+    int place2 = digitalRead(PLACE_2);
+    int place3 = digitalRead(PLACE_3);
+            
+    placesDisponibles = 3;  
+    if (place1 == 1) placesDisponibles--;
+    if (place2 == 1) placesDisponibles--;
+    if (place3 == 1) placesDisponibles--;
+            
+           
+    lcd.setCursor(0, 0);
+    lcd.print("Places disp: ");
+    lcd.print(placesDisponibles);
+    lcd.print("   ");
+    lcd.setCursor(0, 1);
+    if (placesDisponibles == 0) {
+        lcd.print("Complet           ");
+      }
+    else {
+        lcd.print("Disponible        ");
+            }
+    }
+        </textarea>
+
+        <!-- Troisième éditeur de code -->
+        <h3>Ouverture / fermeture barrières<br><br></h3>
+        <textarea id="code-editor-3">
+
+void ouvrirBarriereEntree() {
+  barriereEntree.write(90);  // Ouverture de la barrière
+            
+  // Affiche sur le LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Barriere entree  ");
+  lcd.setCursor(0, 1);
+  lcd.print("ouverte           ");
+}
+          
+void fermerBarriereEntree() {
+  barriereEntree.write(0);  // Fermeture de la barrière
+}
+          
+void ouvrirBarriereSortie() {
+  barriereSortie.write(90);  // Ouverture de la barrière
+            
+  lcd.setCursor(0, 0);
+  lcd.print("Barriere sortie   ");
+  lcd.setCursor(0, 1);
+  lcd.print("ouverte           ");
+}
+          
+void fermerBarriereSortie() {
+  barriereSortie.write(0);  // Fermeture de la barrière
+}
+        </textarea>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Projet Mini Parking - SIN STI2D | Tous droits réservés</p>
+    </footer>
+
+    <!-- Lien vers scripts.js -->
+    <script src="scripts.js"></script>
+</body>
+</html>
